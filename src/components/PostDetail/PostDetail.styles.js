@@ -53,11 +53,14 @@ export const Title = styled.div`
   font-style: italic;
   font-size: 1em;
   margin: 0.5em 0;
+  span {
+    font-style: normal;
+  }
 `;
 
 export const Body = styled.div`
   margin-left: 0.5em;
-  margin-bottom: 1em;
+  margin: 0 0 1em 1em;
 `;
 
 export const InputEditWrap = styled.div`

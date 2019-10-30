@@ -17,6 +17,15 @@ export const Data = styled.div`
     border-radius: 0.3em;
     cursor: pointer;
   }
+  a {
+    text-decoration: none;
+    color: black;
+    display: block;
+    width: 100%;
+  }
+  a:active {
+    color: black;
+  }
 `;
 
 export const Author = styled.div`

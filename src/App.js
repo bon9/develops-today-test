@@ -1,20 +1,26 @@
 import React, { useState } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
-import { connect } from "react-redux";
 
-import * as actions from "./store/actions";
 import PostsContainer from "./containers/PostsContainer";
 import ViewPostContainer from "./containers/ViewPostContainer";
 import { AppWrap, BodyWrap } from "./App.styles";
 import Header from "./components/Header/Header";
 
-function App({ onFetchBlogs }) {
+function App() {
   const [referrer, setReferrer] = useState(null);
+
+  const setReferrerDefault = () => {
+    setReferrer(null);
+  };
+
+  const handleClickBack = () => {
+    setReferrer("/posts");
+  };
 
   const routes = (
     <Switch>
       <Route path="/posts" exact>
-        <PostsContainer />
+        <PostsContainer setReferrerDefault={setReferrerDefault} />
       </Route>
       <Route path="/posts/:postId" exact>
         <ViewPostContainer referrer={referrer} />
@@ -22,10 +28,6 @@ function App({ onFetchBlogs }) {
       <Redirect to="/posts" />
     </Switch>
   );
-
-  const handleClickBack = () => {
-    setReferrer("/posts");
-  };
 
   return (
     <AppWrap>
@@ -35,19 +37,4 @@ function App({ onFetchBlogs }) {
   );
 }
 
-const mapStateToProps = state => {
-  return {
-    blogs: state.blogs
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    // onFetchBlogs: () => dispatch(actions.fetchBlogs())
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App);
+export default App;

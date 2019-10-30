@@ -1,11 +1,18 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
+
 import {
   BodyComment,
   ButtonCreate,
   CreateCommentWrap
 } from "./CreateComment.styles";
 
-const CreateComment = ({ onCreateComment, id }) => {
+CreateComment.propTypes = {
+  onCreateComment: PropTypes.func,
+  id: PropTypes.number
+};
+
+function CreateComment({ onCreateComment, id }) {
   const [areaValue, serAreaValue] = useState("");
 
   const handleChange = e => {
@@ -34,6 +41,6 @@ const CreateComment = ({ onCreateComment, id }) => {
       </ButtonCreate>
     </CreateCommentWrap>
   );
-};
+}
 
 export default CreateComment;

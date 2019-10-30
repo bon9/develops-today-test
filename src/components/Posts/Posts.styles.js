@@ -5,13 +5,6 @@ export const PostsWrap = styled.div`
   flex-direction: column;
   max-width: 100%;
   margin-bottom: 1em;
-  a {
-    text-decoration: none;
-    color: black;
-  }
-  a:active {
-    color: black;
-  }
 `;
 
 export const NewPostWrap = styled.div`

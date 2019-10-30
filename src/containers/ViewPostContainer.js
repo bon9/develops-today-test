@@ -2,12 +2,22 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
 import { Redirect } from "react-router-dom";
+import PropTypes from "prop-types";
 
-import ViewPost from "./../components/ViewPost/ViewPost";
+import PostDetail from "./../components/PostDetail/PostDetail";
 import * as actions from "../store/actions";
-import Preloader from "./../components/UI/Preloader/Preloader";
 
-const ViewPostContainer = ({
+ViewPostContainer.propTypes = {
+  onFetchPostDetail: PropTypes.func,
+  onSaveEdit: PropTypes.func,
+  onCreateComment: PropTypes.func,
+  post: PropTypes.object,
+  error: PropTypes.bool,
+  referrer: PropTypes.string,
+  setReferrerDefault: PropTypes.func
+};
+
+function ViewPostContainer({
   onFetchPostDetail,
   onSaveEdit,
   onCreateComment,
@@ -15,22 +25,19 @@ const ViewPostContainer = ({
   isFetching,
   error,
   referrer
-}) => {
+}) {
   let { postId } = useParams();
 
   useEffect(() => {
     onFetchPostDetail(postId);
   }, [onFetchPostDetail, postId]);
-  if (isFetching) {
-    return <Preloader />;
-  }
 
   if (error) {
     return <div>{error}</div>;
   }
 
   let summary = post && (
-    <ViewPost
+    <PostDetail
       post={post}
       onSaveEdit={onSaveEdit}
       onCreateComment={onCreateComment}
@@ -40,12 +47,11 @@ const ViewPostContainer = ({
     summary = <Redirect to={referrer} />;
   }
   return summary;
-};
+}
 
 const mapStateToProps = state => {
   return {
     post: state.posts.post,
-    isFetching: state.posts.isFetchingPostDetail,
     error: state.posts.error
   };
 };

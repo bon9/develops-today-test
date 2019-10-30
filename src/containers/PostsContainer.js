@@ -1,24 +1,31 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 import Posts from "./../components/Posts/Posts";
 import * as actions from "../store/actions";
-import Preloader from "./../components/UI/Preloader/Preloader";
 
-const PostsContainer = ({
+PostsContainer.propTypes = {
+  onFetchPosts: PropTypes.func,
+  onCreatePost: PropTypes.func,
+  onDeletePost: PropTypes.func,
+  posts: PropTypes.array,
+  error: PropTypes.bool,
+  setReferrerDefault: PropTypes.func
+};
+
+function PostsContainer({
   onFetchPosts,
   onCreatePost,
   onDeletePost,
   posts,
-  isFetching,
-  error
-}) => {
+  error,
+  setReferrerDefault
+}) {
   useEffect(() => {
+    setReferrerDefault();
     onFetchPosts();
-  }, [onFetchPosts]);
-  if (isFetching) {
-    return <Preloader />;
-  }
+  }, [onFetchPosts, setReferrerDefault]);
 
   if (error) {
     return <div>{error}</div>;
@@ -33,12 +40,11 @@ const PostsContainer = ({
       />
     )
   );
-};
+}
 
 const mapStateToProps = state => {
   return {
     posts: state.posts.posts,
-    isFetching: state.posts.isFetching,
     error: state.posts.error
   };
 };

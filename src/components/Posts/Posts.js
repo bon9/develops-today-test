@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
+
 import Post from "./../Post/Post";
 import {
   PostsWrap,
@@ -8,7 +10,13 @@ import {
   Textarea
 } from "./Posts.styles";
 
-const Posts = ({ posts, onCreatePost, onDeletePost }) => {
+Post.propTypes = {
+  posts: PropTypes.array,
+  onCreatePost: PropTypes.func,
+  onDeletePost: PropTypes.func
+};
+
+function Posts({ posts, onCreatePost, onDeletePost }) {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
 
@@ -71,6 +79,6 @@ const Posts = ({ posts, onCreatePost, onDeletePost }) => {
       </NewPostWrap>
     </>
   );
-};
+}
 
 export default Posts;

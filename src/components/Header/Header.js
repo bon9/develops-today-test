@@ -1,7 +1,13 @@
 import React from "react";
+import PropTypes from "prop-types";
+
 import { HeaderWrap, HeaderTitle, NavButton } from "./Header.styles";
 
-const Header = ({ handleClickBack }) => {
+Header.propTypes = {
+  handleClickBack: PropTypes.func
+};
+
+function Header({ handleClickBack }) {
   return (
     <>
       <HeaderWrap>
@@ -10,6 +16,6 @@ const Header = ({ handleClickBack }) => {
       </HeaderWrap>
     </>
   );
-};
+}
 
 export default Header;

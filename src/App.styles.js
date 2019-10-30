@@ -3,10 +3,10 @@ import styled from "styled-components";
 export const AppWrap = styled.div`
   display: flex;
   flex-direction: column;
-  max-width: 800px;
-  border: 1px solid #000;
-  margin: 1em auto;
+  max-width: 1200px;
+  margin: 0 auto;
 `;
+
 export const BodyWrap = styled.div`
   display: flex;
   flex-direction: column;

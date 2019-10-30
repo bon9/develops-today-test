@@ -45,15 +45,10 @@ export function* deletePostSaga({ payload }) {
   try {
     yield axios.delete(`/posts/${id}`);
     yield put(actions.deletePostSuccess());
+    yield put(actions.fetchPosts());
   } catch (error) {
-    // бок в АПИ (TypeError: Cannot read property 'toString' of null)
-    // удаляет, но кидает ошибку
-    if (error.response.status === 500) {
-      yield put(actions.fetchPosts());
-    } else {
-      const errorMessage = error.message;
-      yield put(actions.deletePostFail(errorMessage));
-    }
+    const errorMessage = error.message;
+    yield put(actions.deletePostFail(errorMessage));
   }
 }
 

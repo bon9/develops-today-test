@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const CommentsWrap = styled.div`
   padding: 0.25em 0.35em;
-  margin-bottom: 0.25em;
+  margin: 0 0 0.25em 1em;
 `;
 
 export const Comment = styled.p``;

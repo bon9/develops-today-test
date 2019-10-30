@@ -1,7 +1,7 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 
 import Comments from "./Comments/Comments";
-
 import {
   ViewPostWrap,
   Author,
@@ -13,9 +13,15 @@ import {
   InputEditWrap,
   InputTitle,
   InputBody
-} from "./ViewPost.styles";
+} from "./PostDetail.styles";
 
-const ViewPost = ({ post, onSaveEdit, onCreateComment }) => {
+PostDetail.propTypes = {
+  post: PropTypes.object,
+  onSaveEdit: PropTypes.func,
+  onCreateComment: PropTypes.func
+};
+
+function PostDetail({ post, onSaveEdit, onCreateComment }) {
   const {
     creator = "Anybody",
     date = "Must be date",
@@ -49,7 +55,10 @@ const ViewPost = ({ post, onSaveEdit, onCreateComment }) => {
 
   let summary = (
     <>
-      <Title>{title}</Title>
+      <Title>
+        <span>Title: </span>
+        {title}
+      </Title>
       <Body>{body}</Body>
     </>
   );
@@ -80,6 +89,6 @@ const ViewPost = ({ post, onSaveEdit, onCreateComment }) => {
       <Comments comments={comments} onCreateComment={onCreateComment} id={id} />
     </ViewPostWrap>
   );
-};
+}
 
-export default ViewPost;
+export default PostDetail;
