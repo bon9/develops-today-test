@@ -2,26 +2,27 @@ import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
-import "./App.css";
 import * as actions from "./store/actions";
-import Preloader from "./components/UI/Preloader/Preloader";
+import PostsContainer from "./containers/PostsContainer";
+import ViewPostContainer from "./containers/ViewPostContainer";
+import { AppWrap, HeaderWrap, HeaderTitle, BodyWrap } from "./App.styles";
 
 function App({ onFetchBlogs }) {
-  // if (isAuth) {
-  //   routes = (
-  //     <Switch>
-  //       <Route path="/" exact component={MainPage} />
-  //       <Route path="/personal" component={Personal} />
-  //       <Route path="/logout" component={Logout} />
-  //       <Redirect to="/" />
-  //     </Switch>
-  //   );
-  // }
+  const routes = (
+    <Switch>
+      <Route path="/posts" exact component={PostsContainer} />
+      <Route path="/posts/:postId" component={ViewPostContainer} />
+      <Redirect to="/posts" />
+    </Switch>
+  );
 
   return (
-    <div>
-      <Preloader />
-    </div>
+    <AppWrap>
+      <HeaderWrap>
+        <HeaderTitle>Develops Today</HeaderTitle>
+      </HeaderWrap>
+      <BodyWrap>{routes}</BodyWrap>
+    </AppWrap>
   );
 }
 
