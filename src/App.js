@@ -1,26 +1,43 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Route, Switch, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
 
-function App() {
+import "./App.css";
+import * as actions from "./store/actions";
+import Preloader from "./components/UI/Preloader/Preloader";
+
+function App({ onFetchBlogs }) {
+  // if (isAuth) {
+  //   routes = (
+  //     <Switch>
+  //       <Route path="/" exact component={MainPage} />
+  //       <Route path="/personal" component={Personal} />
+  //       <Route path="/logout" component={Logout} />
+  //       <Redirect to="/" />
+  //     </Switch>
+  //   );
+  // }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Preloader />
     </div>
   );
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    blogs: state.blogs
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    // onFetchBlogs: () => dispatch(actions.fetchBlogs())
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);
