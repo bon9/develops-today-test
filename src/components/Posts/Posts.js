@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 
 import Post from "./../Post/Post";
@@ -9,37 +9,27 @@ import {
   Input,
   Textarea
 } from "./Posts.styles";
+import useHandleChange from "../../hooks/useHandleChange";
 
 Post.propTypes = {
   posts: PropTypes.array,
   onCreatePost: PropTypes.func,
-  onDeletePost: PropTypes.func
+  onDeletePost: PropTypes.func.isRequired
 };
 
 function Posts({ posts, onCreatePost, onDeletePost }) {
-  const [title, setTitle] = useState("");
-  const [body, setBody] = useState("");
+  const [titlePost, bodyPost, setData] = useHandleChange();
 
   if (!posts) {
     return null;
   }
 
-  const handleChange = (e, type) => {
-    if (type === "title") {
-      setTitle(e.target.value);
-    }
-    if (type === "body") {
-      setBody(e.target.value);
-    }
-  };
-
   const handleClick = () => {
     const newPost = {
-      title,
-      body
+      titlePost,
+      bodyPost
     };
-    setTitle("");
-    setBody("");
+    setData(null, "reset");
     onCreatePost(newPost);
   };
 
@@ -64,16 +54,16 @@ function Posts({ posts, onCreatePost, onDeletePost }) {
         <Input
           type="text"
           placeholder="title"
-          onChange={e => handleChange(e, "title")}
-          value={title}
+          onChange={e => setData(e, "title")}
+          value={titlePost}
         />
         <Textarea
           type="text"
           placeholder="body"
-          onChange={e => handleChange(e, "body")}
-          value={body}
+          onChange={e => setData(e, "body")}
+          value={bodyPost}
         />
-        <Button onClick={handleClick} disabled={!body || !title}>
+        <Button onClick={handleClick} disabled={!bodyPost || !titlePost}>
           Add new post
         </Button>
       </NewPostWrap>

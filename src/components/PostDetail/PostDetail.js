@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 
 import Comments from "./Comments/Comments";
+import useHandleChange from "../../hooks/useHandleChange";
 import {
   ViewPostWrap,
   Author,
@@ -16,10 +17,10 @@ import {
 
 PostDetail.propTypes = {
   post: PropTypes.object,
-  onSaveEdit: PropTypes.func,
-  onCreateComment: PropTypes.func
-};
+  onSaveEdit: PropTypes.func.isRequired,
 
+  onCreateComment: PropTypes.func.isRequired
+};
 function PostDetail({ post, onSaveEdit, onCreateComment }) {
   const {
     creator = "Anybody",
@@ -31,8 +32,7 @@ function PostDetail({ post, onSaveEdit, onCreateComment }) {
   } = post;
 
   const [editing, setEditing] = useState(false);
-  const [titleEdit, setTitleEdit] = useState(title);
-  const [bodyEdit, setBodyEdit] = useState(body);
+  const [titlePost, bodyPost, setData] = useHandleChange(title, body);
 
   const handleClickEdit = () => {
     setEditing(true);
@@ -40,16 +40,7 @@ function PostDetail({ post, onSaveEdit, onCreateComment }) {
 
   const handleClickSave = () => {
     setEditing(false);
-    onSaveEdit({ titleEdit, bodyEdit, id, date, creator });
-  };
-
-  const handleChange = (e, type) => {
-    if (type === "title") {
-      setTitleEdit(e.target.value);
-    }
-    if (type === "body") {
-      setBodyEdit(e.target.value);
-    }
+    onSaveEdit({ titlePost, bodyPost, id, date, creator });
   };
 
   let summary = (
@@ -65,11 +56,8 @@ function PostDetail({ post, onSaveEdit, onCreateComment }) {
   if (editing) {
     summary = (
       <InputEditWrap>
-        <InputTitle
-          value={titleEdit}
-          onChange={e => handleChange(e, "title")}
-        />
-        <InputBody value={bodyEdit} onChange={e => handleChange(e, "body")} />
+        <InputTitle value={titlePost} onChange={e => setData(e, "title")} />
+        <InputBody value={bodyPost} onChange={e => setData(e, "body")} />
       </InputEditWrap>
     );
   }

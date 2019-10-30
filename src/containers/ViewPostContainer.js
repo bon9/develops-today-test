@@ -8,9 +8,9 @@ import PostDetail from "./../components/PostDetail/PostDetail";
 import * as actions from "../store/actions";
 
 ViewPostContainer.propTypes = {
-  onFetchPostDetail: PropTypes.func,
-  onSaveEdit: PropTypes.func,
-  onCreateComment: PropTypes.func,
+  onFetchPostDetail: PropTypes.func.isRequired,
+  onSaveEdit: PropTypes.func.isRequired,
+  onCreateComment: PropTypes.func.isRequired,
   post: PropTypes.object,
   error: PropTypes.bool,
   referrer: PropTypes.string,
@@ -36,17 +36,19 @@ function ViewPostContainer({
     return <div>{error}</div>;
   }
 
-  let summary = post && (
-    <PostDetail
-      post={post}
-      onSaveEdit={onSaveEdit}
-      onCreateComment={onCreateComment}
-    />
-  );
   if (referrer) {
-    summary = <Redirect to={referrer} />;
+    return <Redirect to={referrer} />;
   }
-  return summary;
+
+  return (
+    post && (
+      <PostDetail
+        post={post}
+        onSaveEdit={onSaveEdit}
+        onCreateComment={onCreateComment}
+      />
+    )
+  );
 }
 
 const mapStateToProps = state => {
@@ -56,15 +58,11 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onFetchPostDetail: id => dispatch(actions.fetchPostDetail(id)),
-    onSaveEdit: editedPost => dispatch(actions.saveEdit(editedPost)),
-    onCreateComment: newComment => dispatch(actions.createComment(newComment))
-  };
-};
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  {
+    onFetchPostDetail: actions.fetchPostDetail,
+    onSaveEdit: actions.saveEdit,
+    onCreateComment: actions.createComment
+  }
 )(ViewPostContainer);

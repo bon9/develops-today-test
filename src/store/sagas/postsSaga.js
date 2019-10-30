@@ -1,13 +1,37 @@
-import { put } from "redux-saga/effects";
+import { put, call } from "redux-saga/effects";
 
 import axios from "../../api/blogApi";
 import * as actions from "../actions";
 import { currentDate } from "../../shared/utilities";
 
+function fetchPosts() {
+  return axios.get("/posts");
+}
+
+function createPost(dataPost) {
+  return axios.post("/posts", dataPost);
+}
+
+function deletePost(id) {
+  return axios.delete(`/posts/${id}`);
+}
+
+function fetchPostDetail(id) {
+  return axios.get(`/posts/${id}?_embed=comments`);
+}
+
+function saveEdit(id, updatePost) {
+  return axios.put(`/posts/${id}`, updatePost);
+}
+
+function createComment(newComment) {
+  return axios.post(`/comments`, newComment);
+}
+
 export function* fetchPostsSaga() {
   yield put(actions.fetchPostsStart());
   try {
-    const response = yield axios.get("/posts");
+    const response = yield call(fetchPosts);
     const posts = response.data;
     yield put(actions.fetchPostsSuccess(posts));
   } catch (error) {
@@ -18,11 +42,11 @@ export function* fetchPostsSaga() {
 
 export function* createPostSaga({ payload }) {
   const {
-    newPost: { title, body, creator = "Oleh" }
+    newPost: { titlePost, bodyPost, creator = "Oleh" }
   } = payload;
   const dataPost = {
-    title,
-    body,
+    title: titlePost,
+    body: bodyPost,
     creator,
     date: currentDate()
   };
@@ -30,7 +54,7 @@ export function* createPostSaga({ payload }) {
   yield put(actions.createPostStart());
 
   try {
-    yield axios.post("/posts", dataPost);
+    yield call(createPost, dataPost);
     yield put(actions.createPostSuccess());
     yield put(actions.fetchPosts());
   } catch (error) {
@@ -43,7 +67,7 @@ export function* deletePostSaga({ payload }) {
   const { id } = payload;
   yield put(actions.deletePostStart());
   try {
-    yield axios.delete(`/posts/${id}`);
+    yield call(deletePost, id);
     yield put(actions.deletePostSuccess());
     yield put(actions.fetchPosts());
   } catch (error) {
@@ -56,7 +80,7 @@ export function* fetchPostDetailSaga({ payload }) {
   const { id } = payload;
   yield put(actions.fetchPostDetailStart());
   try {
-    const response = yield axios.get(`/posts/${id}?_embed=comments`);
+    const response = yield call(fetchPostDetail, id);
     const postDetail = response.data;
     yield put(actions.fetchPostDetailSuccess(postDetail));
   } catch (error) {
@@ -67,19 +91,19 @@ export function* fetchPostDetailSaga({ payload }) {
 
 export function* saveEditSaga({ payload }) {
   const {
-    editedPost: { titleEdit, bodyEdit, id, creator = "Anybody", date }
+    editedPost: { titlePost, bodyPost, id, creator = "Anybody", date }
   } = payload;
 
   const updatePost = {
-    title: titleEdit,
-    body: bodyEdit,
+    title: titlePost,
+    body: bodyPost,
     creator,
     date
   };
 
   yield put(actions.saveEditStart());
   try {
-    yield axios.put(`/posts/${id}`, updatePost);
+    yield call(saveEdit, id, updatePost);
     yield put(actions.fetchPostDetail(id));
     yield put(actions.saveEditSuccess());
   } catch (error) {
@@ -97,13 +121,13 @@ export function* createCommentSaga({ payload }) {
     body,
     postId: id
   };
-  yield put(actions.saveEditStart());
+  yield put(actions.createCommentStart());
   try {
-    yield axios.post(`/comments`, newComment);
+    yield call(createComment, newComment);
     yield put(actions.fetchPostDetail(id));
-    yield put(actions.saveEditSuccess());
+    yield put(actions.createCommentSuccess());
   } catch (error) {
     const errorMessage = error.message;
-    yield put(actions.saveEditFail(errorMessage));
+    yield put(actions.createCommentFail(errorMessage));
   }
 }

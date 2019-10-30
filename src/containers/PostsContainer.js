@@ -6,9 +6,9 @@ import Posts from "./../components/Posts/Posts";
 import * as actions from "../store/actions";
 
 PostsContainer.propTypes = {
-  onFetchPosts: PropTypes.func,
-  onCreatePost: PropTypes.func,
-  onDeletePost: PropTypes.func,
+  onFetchPosts: PropTypes.func.isRequired,
+  onCreatePost: PropTypes.func.isRequired,
+  onDeletePost: PropTypes.func.isRequired,
   posts: PropTypes.array,
   error: PropTypes.bool,
   setReferrerDefault: PropTypes.func
@@ -49,15 +49,11 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onFetchPosts: () => dispatch(actions.fetchPosts()),
-    onCreatePost: newPost => dispatch(actions.createPost(newPost)),
-    onDeletePost: id => dispatch(actions.deletePost(id))
-  };
-};
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  {
+    onFetchPosts: actions.fetchPosts,
+    onCreatePost: actions.createPost,
+    onDeletePost: actions.deletePost
+  }
 )(PostsContainer);
