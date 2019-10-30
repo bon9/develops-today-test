@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/develops-today-test/static/css/main.f164232d.chunk.css",
+    "main.js": "/develops-today-test/static/js/main.57632b5c.chunk.js",
+    "main.js.map": "/develops-today-test/static/js/main.57632b5c.chunk.js.map",
+    "runtime-main.js": "/develops-today-test/static/js/runtime-main.070cf329.js",
+    "runtime-main.js.map": "/develops-today-test/static/js/runtime-main.070cf329.js.map",
+    "static/js/2.6302022a.chunk.js": "/develops-today-test/static/js/2.6302022a.chunk.js",
+    "static/js/2.6302022a.chunk.js.map": "/develops-today-test/static/js/2.6302022a.chunk.js.map",
+    "index.html": "/develops-today-test/index.html",
+    "precache-manifest.d6f1256fcef09c9af3f54dacb8001b19.js": "/develops-today-test/precache-manifest.d6f1256fcef09c9af3f54dacb8001b19.js",
+    "service-worker.js": "/develops-today-test/service-worker.js",
+    "static/css/main.f164232d.chunk.css.map": "/develops-today-test/static/css/main.f164232d.chunk.css.map"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.070cf329.js",
+    "static/js/2.6302022a.chunk.js",
+    "static/css/main.f164232d.chunk.css",
+    "static/js/main.57632b5c.chunk.js"
+  ]
+}
