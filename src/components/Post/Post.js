@@ -1,12 +1,25 @@
 import React from "react";
-import { PostWrap, PublishDate, Description, Author } from "./Post.styles";
+import { Link } from "react-router-dom";
 
-const Post = () => {
+import {
+  PostWrap,
+  PublishDate,
+  Description,
+  Author,
+  DeleteButton,
+  Data
+} from "./Post.styles";
+const Post = ({ title, body, creator, date, id, onDeletePost }) => {
   return (
     <PostWrap>
-      <Author>author</Author>
-      <PublishDate>2019-25-12</PublishDate>
-      <Description>shorе description</Description>
+      <Data>
+        <Link to={`/posts/${id}`}>
+          <Author>{creator}</Author>
+          <PublishDate>{date}</PublishDate>
+          <Description>{title}</Description>
+        </Link>
+      </Data>
+      <DeleteButton onClick={() => onDeletePost(id)}>delete</DeleteButton>
     </PostWrap>
   );
 };

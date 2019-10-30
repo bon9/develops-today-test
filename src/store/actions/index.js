@@ -1,6 +1,26 @@
 export {
-  fetchBlogs,
-  fetchBlogsStart,
-  fetchBlogsSuccess,
-  fetchBlogsFail
-} from "./blogActions";
+  fetchPosts,
+  fetchPostsStart,
+  fetchPostsSuccess,
+  fetchPostsFail,
+  createPost,
+  createPostStart,
+  createPostSuccess,
+  createPostFail,
+  deletePost,
+  deletePostStart,
+  deletePostSuccess,
+  deletePostFail,
+  fetchPostDetail,
+  fetchPostDetailStart,
+  fetchPostDetailSuccess,
+  fetchPostDetailFail,
+  saveEdit,
+  saveEditStart,
+  saveEditSuccess,
+  saveEditFail,
+  createComment,
+  createCommentStart,
+  createCommentSuccess,
+  createCommentFail
+} from "./postsActions";

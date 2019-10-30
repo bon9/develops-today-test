@@ -34,12 +34,16 @@ export const ButtonCreate = styled.button`
   text-align: center;
   border-radius: 0.3rem;
   transition: all 0.25s ease;
-  &:hover {
+  :hover:enabled {
     color: #fff;
     background-color: #21ba45;
-    letter-spacing: 0.05em;
   }
-  &:active {
+  &:active:enabled {
     background-color: grey;
+  }
+  &:disabled {
+    cursor: initial;
+    color: lightgrey;
+    box-shadow: 0 0 0 1px lightgrey inset;
   }
 `;

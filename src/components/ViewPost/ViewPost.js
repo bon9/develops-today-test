@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
+
 import Comments from "./Comments/Comments";
+
 import {
   ViewPostWrap,
   Author,
@@ -7,19 +9,75 @@ import {
   Title,
   Body,
   ButtonEdit,
-  ButtonSave
+  ButtonSave,
+  InputEditWrap,
+  InputTitle,
+  InputBody
 } from "./ViewPost.styles";
 
-const ViewPost = () => {
+const ViewPost = ({ post, onSaveEdit, onCreateComment }) => {
+  const {
+    creator = "Anybody",
+    date = "Must be date",
+    title,
+    body,
+    comments,
+    id
+  } = post;
+
+  const [editing, setEditing] = useState(false);
+  const [titleEdit, setTitleEdit] = useState(title);
+  const [bodyEdit, setBodyEdit] = useState(body);
+
+  const handleClickEdit = () => {
+    setEditing(true);
+  };
+
+  const handleClickSave = () => {
+    setEditing(false);
+    onSaveEdit({ titleEdit, bodyEdit, id, date, creator });
+  };
+
+  const handleChange = (e, type) => {
+    if (type === "title") {
+      setTitleEdit(e.target.value);
+    }
+    if (type === "body") {
+      setBodyEdit(e.target.value);
+    }
+  };
+
+  let summary = (
+    <>
+      <Title>{title}</Title>
+      <Body>{body}</Body>
+    </>
+  );
+
+  if (editing) {
+    summary = (
+      <InputEditWrap>
+        <InputTitle
+          value={titleEdit}
+          onChange={e => handleChange(e, "title")}
+        />
+        <InputBody value={bodyEdit} onChange={e => handleChange(e, "body")} />
+      </InputEditWrap>
+    );
+  }
+
   return (
     <ViewPostWrap>
-      <Author>Author</Author>
-      <CreateDate>2015-15-15</CreateDate>
-      <ButtonEdit>Edit post</ButtonEdit>
-      <ButtonSave>Save Post</ButtonSave>
-      <Title>titled sese aqe w3dkjkj dkfjdkrurkj jdk jkd j</Title>
-      <Body>body fsdf sdf sdf sdf sdf sdfddsdfdsf fdrkdurk dk fj</Body>
-      <Comments />
+      <Author>{creator}</Author>
+      <CreateDate>{date}</CreateDate>
+      <ButtonEdit disabled={editing} onClick={handleClickEdit}>
+        Edit post
+      </ButtonEdit>
+      <ButtonSave disabled={!editing} onClick={handleClickSave}>
+        Save Post
+      </ButtonSave>
+      {summary}
+      <Comments comments={comments} onCreateComment={onCreateComment} id={id} />
     </ViewPostWrap>
   );
 };

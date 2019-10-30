@@ -1,15 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   BodyComment,
   ButtonCreate,
   CreateCommentWrap
 } from "./CreateComment.styles";
 
-const CreateComment = () => {
+const CreateComment = ({ onCreateComment, id }) => {
+  const [areaValue, serAreaValue] = useState("");
+
+  const handleChange = e => {
+    serAreaValue(e.target.value);
+  };
+
+  const handleClick = () => {
+    const newComment = {
+      id,
+      body: areaValue
+    };
+
+    serAreaValue("");
+    onCreateComment(newComment);
+  };
+
   return (
     <CreateCommentWrap>
-      <BodyComment>asd</BodyComment>
-      <ButtonCreate>Create comment</ButtonCreate>
+      <BodyComment
+        value={areaValue}
+        onChange={handleChange}
+        placeholder="Add comment"
+      ></BodyComment>
+      <ButtonCreate disabled={!areaValue} onClick={handleClick}>
+        Create comment
+      </ButtonCreate>
     </CreateCommentWrap>
   );
 };

@@ -5,6 +5,13 @@ export const PostsWrap = styled.div`
   flex-direction: column;
   max-width: 100%;
   margin-bottom: 1em;
+  a {
+    text-decoration: none;
+    color: black;
+  }
+  a:active {
+    color: black;
+  }
 `;
 
 export const NewPostWrap = styled.div`
@@ -40,11 +47,11 @@ export const Textarea = styled.textarea`
     color: rgba(0, 0, 0, 0.8);
   }
 `;
+
 export const Button = styled.button`
   box-shadow: 0 0 0 1px #21ba45 inset;
   color: #21ba45;
   font-size: 1rem;
-  cursor: pointer;
   min-height: 1em;
   outline: 0;
   border: none;
@@ -55,12 +62,17 @@ export const Button = styled.button`
   text-align: center;
   border-radius: 0.3rem;
   transition: all 0.25s ease;
-  &:hover {
+  &:hover:enabled {
+    cursor: pointer;
     color: #fff;
     background-color: #21ba45;
     letter-spacing: 0.05em;
   }
-  &:active {
+  &:active:enabled {
     background-color: grey;
+  }
+  &:disabled {
+    color: lightgrey;
+    box-shadow: 0 0 0 1px lightgrey inset;
   }
 `;

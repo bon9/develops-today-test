@@ -33,15 +33,17 @@ export const ButtonEdit = styled.button`
   border-radius: 0.3rem;
   transition: all 0.25s ease;
   margin-left: 1em;
-  &:hover {
+  :hover:enabled {
     color: #fff;
     background-color: #21ba45;
   }
-  &:active {
+  &:active:enabled {
     background-color: grey;
   }
   &:disabled {
-    background-color: yellow;
+    cursor: initial;
+    color: lightgrey;
+    box-shadow: 0 0 0 1px lightgrey inset;
   }
 `;
 
@@ -56,4 +58,40 @@ export const Title = styled.div`
 export const Body = styled.div`
   margin-left: 0.5em;
   margin-bottom: 1em;
+`;
+
+export const InputEditWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 0.5em 0;
+`;
+
+export const InputTitle = styled.input`
+  flex: 1 0 auto;
+  max-width: 100%;
+  padding: 0.5em;
+  margin-bottom: 0.25em;
+  outline: none;
+  border: 1px solid rgba(34, 36, 38, 0.15);
+  color: rgba(0, 0, 0, 0.9);
+  border-radius: 0.3em;
+  transition: box-shadow 0.1s ease, border-color 0.1s ease;
+  &:focus {
+    border-color: #85b7d9;
+    color: rgba(0, 0, 0, 0.8);
+  }
+`;
+
+export const InputBody = styled.textarea`
+  padding: 0.5em;
+  margin-bottom: 1em;
+
+  outline: none;
+  border: 1px solid rgba(34, 36, 38, 0.15);
+  border-radius: 0.3em;
+  transition: box-shadow 0.1s ease, border-color 0.1s ease;
+  &:focus {
+    border-color: #85b7d9;
+    color: rgba(0, 0, 0, 0.8);
+  }
 `;

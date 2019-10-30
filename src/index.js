@@ -7,15 +7,15 @@ import createSagaMiddleware from "redux-saga";
 
 import "./index.css";
 import App from "./App";
-import blogReducer from "./store/reducers/blogReducer";
-import { watchBlog } from "./store/sagas";
+import postsReducer from "./store/reducers/postsReducer";
+import { watchPosts } from "./store/sagas";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const sagaMiddleware = createSagaMiddleware();
 
 const rootReducers = combineReducers({
-  blog: blogReducer
+  posts: postsReducer
 });
 
 const store = createStore(
@@ -23,7 +23,7 @@ const store = createStore(
   composeEnhancers(applyMiddleware(sagaMiddleware))
 );
 
-sagaMiddleware.run(watchBlog);
+sagaMiddleware.run(watchPosts);
 
 const app = (
   <Provider store={store}>

@@ -1,26 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
 import * as actions from "./store/actions";
 import PostsContainer from "./containers/PostsContainer";
 import ViewPostContainer from "./containers/ViewPostContainer";
-import { AppWrap, HeaderWrap, HeaderTitle, BodyWrap } from "./App.styles";
+import { AppWrap, BodyWrap } from "./App.styles";
+import Header from "./components/Header/Header";
 
 function App({ onFetchBlogs }) {
+  const [referrer, setReferrer] = useState(null);
+
   const routes = (
     <Switch>
-      <Route path="/posts" exact component={PostsContainer} />
-      <Route path="/posts/:postId" component={ViewPostContainer} />
+      <Route path="/posts" exact>
+        <PostsContainer />
+      </Route>
+      <Route path="/posts/:postId" exact>
+        <ViewPostContainer referrer={referrer} />
+      </Route>
       <Redirect to="/posts" />
     </Switch>
   );
 
+  const handleClickBack = () => {
+    setReferrer("/posts");
+  };
+
   return (
     <AppWrap>
-      <HeaderWrap>
-        <HeaderTitle>Develops Today</HeaderTitle>
-      </HeaderWrap>
+      <Header handleClickBack={handleClickBack} />
       <BodyWrap>{routes}</BodyWrap>
     </AppWrap>
   );
