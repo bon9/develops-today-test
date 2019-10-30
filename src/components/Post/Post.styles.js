@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const PostWrap = styled.div`
   display: flex;
   justify-content: space-between;
-  margin: 0.25em 0;
+  margin: 0;
   transition: all 0.5s ease;
   padding: 0.25em;
   box-shadow: 0 0 2px 2px transparent;
@@ -12,6 +12,8 @@ export const PostWrap = styled.div`
 export const Data = styled.div`
   flex-grow: 1;
   margin-right: 1em;
+  padding: 0.5em;
+  transition: all 0.25s ease;
   &:hover {
     box-shadow: 0 0 2px 2px lightgrey;
     border-radius: 0.3em;
