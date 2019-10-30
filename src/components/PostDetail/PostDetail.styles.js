@@ -18,7 +18,7 @@ export const CreateDate = styled.span`
   line-height: 1.2;
 `;
 
-export const ButtonEdit = styled.button`
+export const Button = styled.button`
   box-shadow: 0 0 0 1px #21ba45 inset;
   color: #21ba45;
   font-size: 0.8em;
@@ -26,7 +26,7 @@ export const ButtonEdit = styled.button`
   outline: 0;
   border: none;
   background: none;
-  padding: 0.25em 1em;
+  padding: 0.25em 0.75em;
   font-weight: normal;
   line-height: 1.2;
   text-align: center;
@@ -46,8 +46,6 @@ export const ButtonEdit = styled.button`
     box-shadow: 0 0 0 1px lightgrey inset;
   }
 `;
-
-export const ButtonSave = styled(ButtonEdit)``;
 
 export const Title = styled.div`
   font-style: italic;

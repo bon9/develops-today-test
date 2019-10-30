@@ -8,8 +8,7 @@ import {
   CreateDate,
   Title,
   Body,
-  ButtonEdit,
-  ButtonSave,
+  Button,
   InputEditWrap,
   InputTitle,
   InputBody
@@ -79,12 +78,12 @@ function PostDetail({ post, onSaveEdit, onCreateComment }) {
     <ViewPostWrap>
       <Author>{creator}</Author>
       <CreateDate>{date}</CreateDate>
-      <ButtonEdit disabled={editing} onClick={handleClickEdit}>
-        Edit post
-      </ButtonEdit>
-      <ButtonSave disabled={!editing} onClick={handleClickSave}>
-        Save Post
-      </ButtonSave>
+      <Button disabled={editing} onClick={handleClickEdit}>
+        Edit
+      </Button>
+      <Button disabled={!editing} onClick={handleClickSave}>
+        Save
+      </Button>
       {summary}
       <Comments comments={comments} onCreateComment={onCreateComment} id={id} />
     </ViewPostWrap>

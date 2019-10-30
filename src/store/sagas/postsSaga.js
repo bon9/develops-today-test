@@ -79,8 +79,7 @@ export function* saveEditSaga({ payload }) {
 
   yield put(actions.saveEditStart());
   try {
-    const response = yield axios.put(`/posts/${id}`, updatePost);
-    console.log(response);
+    yield axios.put(`/posts/${id}`, updatePost);
     yield put(actions.fetchPostDetail(id));
     yield put(actions.saveEditSuccess());
   } catch (error) {
@@ -98,11 +97,9 @@ export function* createCommentSaga({ payload }) {
     body,
     postId: id
   };
-  console.log("newComment", newComment);
   yield put(actions.saveEditStart());
   try {
-    const response = yield axios.post(`/comments`, newComment);
-    console.log(response);
+    yield axios.post(`/comments`, newComment);
     yield put(actions.fetchPostDetail(id));
     yield put(actions.saveEditSuccess());
   } catch (error) {
