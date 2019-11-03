@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { connect } from "react-redux";
+import React, { useEffect, useCallback } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -8,29 +8,29 @@ import PostDetail from "./../components/PostDetail/PostDetail";
 import * as actions from "../store/actions";
 
 ViewPostContainer.propTypes = {
-  onFetchPostDetail: PropTypes.func.isRequired,
-  onSaveEdit: PropTypes.func.isRequired,
-  onCreateComment: PropTypes.func.isRequired,
   post: PropTypes.object,
   error: PropTypes.bool,
   referrer: PropTypes.string,
   setReferrerDefault: PropTypes.func
 };
 
-function ViewPostContainer({
-  onFetchPostDetail,
-  onSaveEdit,
-  onCreateComment,
-  post,
-  isFetching,
-  error,
-  referrer
-}) {
+function ViewPostContainer({ isFetching, referrer }) {
   let { postId } = useParams();
+  const { post, error } = useSelector(state => state.posts);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    onFetchPostDetail(postId);
-  }, [onFetchPostDetail, postId]);
+    dispatch(actions.fetchPostDetail(postId));
+  }, [dispatch, postId]);
+
+  const onSaveEdit = useCallback(
+    editedPost => dispatch(actions.saveEdit(editedPost)),
+    [dispatch]
+  );
+  const onCreateComment = useCallback(
+    newComment => dispatch(actions.createComment(newComment)),
+    [dispatch]
+  );
 
   if (error) {
     return <div>{error}</div>;
@@ -51,18 +51,4 @@ function ViewPostContainer({
   );
 }
 
-const mapStateToProps = state => {
-  return {
-    post: state.posts.post,
-    error: state.posts.error
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  {
-    onFetchPostDetail: actions.fetchPostDetail,
-    onSaveEdit: actions.saveEdit,
-    onCreateComment: actions.createComment
-  }
-)(ViewPostContainer);
+export default ViewPostContainer;

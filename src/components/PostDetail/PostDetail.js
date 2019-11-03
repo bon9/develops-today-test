@@ -18,7 +18,6 @@ import {
 PostDetail.propTypes = {
   post: PropTypes.object,
   onSaveEdit: PropTypes.func.isRequired,
-
   onCreateComment: PropTypes.func.isRequired
 };
 function PostDetail({ post, onSaveEdit, onCreateComment }) {

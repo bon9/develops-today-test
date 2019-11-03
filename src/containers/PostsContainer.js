@@ -1,31 +1,32 @@
-import React, { useEffect } from "react";
-import { connect } from "react-redux";
+import React, { useEffect, useCallback } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 
 import Posts from "./../components/Posts/Posts";
 import * as actions from "../store/actions";
 
 PostsContainer.propTypes = {
-  onFetchPosts: PropTypes.func.isRequired,
-  onCreatePost: PropTypes.func.isRequired,
-  onDeletePost: PropTypes.func.isRequired,
-  posts: PropTypes.array,
+  posts: PropTypes.bool,
   error: PropTypes.bool,
   setReferrerDefault: PropTypes.func
 };
 
-function PostsContainer({
-  onFetchPosts,
-  onCreatePost,
-  onDeletePost,
-  posts,
-  error,
-  setReferrerDefault
-}) {
+function PostsContainer({ setReferrerDefault }) {
+  const dispatch = useDispatch();
+  const { posts, error } = useSelector(state => state.posts);
   useEffect(() => {
     setReferrerDefault();
-    onFetchPosts();
-  }, [onFetchPosts, setReferrerDefault]);
+    dispatch(actions.fetchPosts());
+  }, [dispatch, setReferrerDefault]);
+
+  const onCreatePost = useCallback(
+    newPost => dispatch(actions.createPost(newPost)),
+    [dispatch]
+  );
+
+  const onDeletePost = useCallback(id => dispatch(actions.deletePost(id)), [
+    dispatch
+  ]);
 
   if (error) {
     return <div>{error}</div>;
@@ -42,18 +43,4 @@ function PostsContainer({
   );
 }
 
-const mapStateToProps = state => {
-  return {
-    posts: state.posts.posts,
-    error: state.posts.error
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  {
-    onFetchPosts: actions.fetchPosts,
-    onCreatePost: actions.createPost,
-    onDeletePost: actions.deletePost
-  }
-)(PostsContainer);
+export default PostsContainer;
